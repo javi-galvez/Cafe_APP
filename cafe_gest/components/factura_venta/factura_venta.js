@@ -18,7 +18,7 @@ let facturasVenta = JSON.parse(localStorage.getItem(`${DB_NAME}_facturas`)) || [
 let idCounter = parseInt(localStorage.getItem(`${DB_NAME}_facturas_counter`)) || 1;
 
 // Configuración para el sistema de contraseña
-const ADMIN_PASSWORD = "cafe2025"; // Contraseña predeterminada (recomendamos cambiarla)
+const ADMIN_PASSWORD = "cafegalvez2025"; // Contraseña predeterminada (recomendamos cambiarla)
 let intentosFallidos = parseInt(localStorage.getItem(`${DB_NAME}_facturas_intentos_fallidos`)) || 0;
 let tiempoBloqueado = localStorage.getItem(`${DB_NAME}_facturas_tiempo_bloqueado`) || null;
 

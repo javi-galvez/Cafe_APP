@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Efecto de escritura para el título
             const typingText = document.getElementById('typing-text');
-            const text = "Parcela Los Toches";
+            const text = "Finca Galvez";
             let isDeleting = false;
             let charIndex = 0;
             let typingSpeed = 150;

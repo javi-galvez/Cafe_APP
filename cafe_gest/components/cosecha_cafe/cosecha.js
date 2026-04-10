@@ -21,12 +21,21 @@ const formatoPesosCol = new Intl.NumberFormat('es-CO', {
     maximumFractionDigits: 0
 });
 
+// Configuración de formato para Dolares 
+const formatoUSD = new Intl.NumberFormat('es-PA', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+});
+
+
 // Estructura de datos
 let recoleccionCafe = JSON.parse(localStorage.getItem(`${DB_NAME}_recoleccion`)) || [];
 let idCounter = parseInt(localStorage.getItem(`${DB_NAME}_recoleccion_counter`)) || 1;
 
 // Configuración para el sistema de contraseña
-const ADMIN_PASSWORD = "cafe2025"; // Contraseña predeterminada (recomendamos cambiarla)
+const ADMIN_PASSWORD = "cafegalvez2025"; // Contraseña predeterminada (recomendamos cambiarla)
 let intentosFallidos = parseInt(localStorage.getItem(`${DB_NAME}_intentos_fallidos`)) || 0;
 let tiempoBloqueado = localStorage.getItem(`${DB_NAME}_tiempo_bloqueado`) || null;
 
@@ -87,7 +96,7 @@ function cargarTabla(datos = recoleccionCafe) {
             <td>${item.unidad}</td>
             <td>${new Date(item.fecha).toLocaleDateString()}</td>
             <td>${item.cosecha || 'N/A'}</td>
-            <td>${formatoPesosCol.format(item.ganancia)}</td>
+            <td>${formatoUSD.format(item.ganancia)}</td>
             <td class="table-actions">
                 <button class="btn-icon btn-edit" onclick="verificarPassword('editar', ${item.id})">
                     <i class="fas fa-edit"></i>
@@ -605,7 +614,7 @@ exportBtn.addEventListener('click', function() {
         'Unidad': item.unidad,
         'Fecha': new Date(item.fecha).toLocaleDateString('es-CO'),
         'Cosecha': item.cosecha || 'N/A',
-        'Ganancia': formatoPesosCol.format(item.ganancia)
+        'Ganancia': formatoUSD.format(item.ganancia)
     }));
     
     // Crear libro de Excel
@@ -758,6 +767,9 @@ function calcularTotalKilosPorFecha(fechaLocalizada) {
                 break;
             case 'arrobas':
                 cantidadEnKilos *= 12.5; // 1 arroba = 12.5 kg
+                break;
+            case 'libras':
+                cantidadEnKilos *= 0.4536; // 1 libra = 0.4536 kg
                 break;
             // Para kilogramos no hace falta conversión
         }
@@ -931,8 +943,8 @@ function crearContenidoRecibo(registro) {
     });
     
     // Formatear valores monetarios
-    const valorPorUnidadFormateado = formatoPesosCol.format(registro.valorPorUnidad);
-    const totalGananciaFormateado = formatoPesosCol.format(registro.ganancia);
+    const valorPorUnidadFormateado = formatoUSD.format(registro.valorPorUnidad);
+    const totalGananciaFormateado = formatoUSD.format(registro.ganancia);
     const cantidadFormateada = registro.cantidad.toLocaleString('es-CO', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
